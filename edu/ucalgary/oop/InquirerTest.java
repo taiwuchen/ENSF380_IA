@@ -19,6 +19,7 @@ private String expectedLastName = "Bouillon";
 private String expectedPhoneNumber = "+1-123-456-7890";
 private String expectedMessage = "looking for my family members";
 private Inquirer inquirer = new Inquirer(expectedFirstName, expectedLastName, expectedPhoneNumber, expectedMessage);
+private LinkedList<String> interactionLogforDisasterVictim = new LinkedList<>();
 
 /*
 testObjectCreation -> means testing Inquirer constructor: 
@@ -75,6 +76,18 @@ testGetInfo:
     public void testGetInfo() {
         assertEquals("getInfo() should return the inquirer message", expectedMessage,inquirer.getInfo());
     }
+    
+    @Test
+        public void testGetInteractionLogforDisasterVictim() {
+            assertEquals("getInteractionLogforDisasterVictim() should return the interaction log", interactionLogforDisasterVictim, inquirer.getInteractionLogforDisasterVictim());
+        }
+    
+    @Test
+        public void testAddInteractionforDisasterVictim() {
+            String newInteraction = "New interaction";
+            inquirer.addInteractionforDisasterVictim(newInteraction);
+            assertTrue("addInteractionforDisasterVictim() should add the interaction to the log", inquirer.getInteractionLogforDisasterVictim().contains(newInteraction));
+        }
 
 }
 

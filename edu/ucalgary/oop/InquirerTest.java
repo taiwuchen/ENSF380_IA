@@ -78,16 +78,16 @@ testGetInfo:
     }
     
     @Test
-        public void testGetInteractionLogforDisasterVictim() {
-            assertEquals("getInteractionLogforDisasterVictim() should return the interaction log", interactionLogforDisasterVictim, inquirer.getInteractionLogforDisasterVictim());
-        }
+    public void testGetInteractionLogforDisasterVictim() {
+        assertEquals("getInteractionLogforDisasterVictim() should return the interaction log", interactionLogforDisasterVictim, inquirer.getInteractionLogforDisasterVictim());
+    }
     
     @Test
-        public void testAddInteractionforDisasterVictim() {
-            String newInteraction = "New interaction";
-            inquirer.addInteractionforDisasterVictim(newInteraction);
-            assertTrue("addInteractionforDisasterVictim() should add the interaction to the log", inquirer.getInteractionLogforDisasterVictim().contains(newInteraction));
-        }
+    public void testAddInteractionforDisasterVictim() {
+        String newInteraction = "New interaction";
+        inquirer.addInteractionforDisasterVictim(newInteraction);
+        assertTrue("addInteractionforDisasterVictim() should add the interaction to the log", inquirer.getInteractionLogforDisasterVictim().contains(newInteraction));
+    }
 
 }
 

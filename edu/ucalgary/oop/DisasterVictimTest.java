@@ -15,8 +15,10 @@ import java.util.Arrays;
 
 public class DisasterVictimTest {
     private DisasterVictim victim;
-    private List<Supply> suppliesToSet; 
-    private List<FamilyRelation> familyRelations; 
+    private LinkedList<FamilyRelation> familyRelations;
+    private LinkedList<MedicalRecord> medicalRecords;
+    private LinkedList<Supply> personalBelongings;
+    private List<MealType> DIETARYRESTRICTIONS;
     private String expectedFirstName = "Freda";
     private String EXPECTED_ENTRY_DATE = "2024-01-18";
     private String validDate = "2024-01-15";
@@ -38,7 +40,7 @@ public class DisasterVictimTest {
 
   		  
 
-  @Test
+    @Test
     public void testConstructorWithValidEntryDate() {
         String validEntryDate = "2024-01-18";
         DisasterVictim victim = new DisasterVictim("Freda", validEntryDate);
@@ -53,9 +55,8 @@ public class DisasterVictimTest {
         // Expecting IllegalArgumentException due to invalid date format
     }
 
-
-   @Test
-    public void testSetDateOfBirth() {
+    @Test
+    public void testSetAndGetDateOfBirth() {
         String newDateOfBirth = "1987-05-21";
         victim.setDateOfBirth(newDateOfBirth);
         assertEquals("setDateOfBirth should correctly update the date of birth", newDateOfBirth, victim.getDateOfBirth());
@@ -153,8 +154,8 @@ public class DisasterVictimTest {
         assertTrue("addPersonalBelonging should add the supply to personal belongings", correct);
     }
 
-@Test
-public void testRemoveFamilyConnection() {
+    @Test
+    public void testRemoveFamilyConnection() {
         DisasterVictim victim1 = new DisasterVictim("Jane", "2024-01-20");
         DisasterVictim victim2 = new DisasterVictim("John", "2024-01-22");
         FamilyRelation relation1 = new FamilyRelation(victim, "sibling", victim1);
@@ -180,8 +181,8 @@ public void testRemoveFamilyConnection() {
     assertTrue("removeFamilyConnection should remove the family member", true);
 }  
 
-@Test
-public void testRemovePersonalBelonging() {
+    @Test
+    public void testRemovePersonalBelonging() {
     
         Supply supplyToRemove = suppliesToSet.get(0); 
         victim.addPersonalBelonging(supplyToRemove); 
@@ -200,7 +201,7 @@ public void testRemovePersonalBelonging() {
 }
 
 
- @Test
+    @Test
     public void testSetFamilyConnection() {
         DisasterVictim victim1 = new DisasterVictim("Jane", "2024-01-20");
         DisasterVictim victim2 = new DisasterVictim("John", "2024-01-22");
@@ -225,57 +226,62 @@ public void testRemovePersonalBelonging() {
        assertTrue("Family relation should be set", correct);
     }
 
-  @Test
-public void testSetMedicalRecords() {
-    Location testLocation = new Location("Shelter Z", "1234 Shelter Ave");
-    MedicalRecord testRecord = new MedicalRecord(testLocation, "test for strep", "2024-02-09");
-    boolean correct = true;
-
-    MedicalRecord[] newRecords = { testRecord };
-    victim.setMedicalRecords(newRecords);
-    MedicalRecord[] actualRecords = victim.getMedicalRecords();
-
-    // We have not studied overriding equals in arrays of custom objects so we will manually evaluate equality
-    if (newRecords.length != actualRecords.length) {
-        correct = false;
-    } else {
-        int i;
-        for (i=0;i<newRecords.length;i++) {
-            if (actualRecords[i] != newRecords[i]) {
-                correct = false;
-            }
-        }
+    @Test
+    public void testSetAndGetMedicalRecords() {
+        Location testLocation = new Location("Shelter Z", "1234 Shelter Ave");
+        MedicalRecord testRecord = new MedicalRecord(testLocation, "test for strep", "2024-02-09");
+        medicalRecords.add(testRecord);
+        victim.setMedicalRecords(medicalRecords);
+        assertTrue("setMedicalRecords should replace the medical records list with the new list", victim.getMedicalRecords().containsAll(medicalRecords));
     }
-    assertTrue("setMedicalRecords should correctly update medical records", correct);
-}
-
-
-   @Test
-public void testSetPersonalBelongings() {
-    Supply one = new Supply("Tent", 1);
-    Supply two = new Supply("Jug", 3);
-    Supply[] newSupplies = {one, two};
-    boolean correct = true;
-
-    victim.setPersonalBelongings(newSupplies);
-    Supply[] actualSupplies = victim.getPersonalBelongings();
-
-    // We have not studied overriding equals in arrays of custom objects so we will manually evaluate equality
-    if (newSupplies.length != actualSupplies.length) {
-        correct = false;
-    } else {
-        int i;
-        for (i=0;i<newSupplies.length;i++) {
-            if (actualSupplies[i] != newSupplies[i]) {
-                correct = false;
-            }
-        }
-    }
-    assertTrue("setPersonalBelongings should correctly update personal belongings", correct);
-}
-
-
     
+    @Test
+    public void testAddMedicalRecord() {
+        Location testLocation = new Location("Shelter Z", "1234 Shelter Ave");
+        MedicalRecord testRecord = new MedicalRecord(testLocation, "test for strep", "2024-02-09");
+        victim.addMedicalRecord(testRecord);
+        assertTrue("addMedicalRecord should add a medical record", victim.getMedicalRecords().contains(testRecord));
+    }
+
+    @Test
+    public void testSetAndGetPersonalBelongings() {
+        Supply one = new Supply("Tent", 1);
+        Supply two = new Supply("Jug", 3);
+        personalBelongings.add(one);
+        personalBelongings.add(two);
+        victim.setPersonalBelongings(personalBelongings);
+        assertTrue("setPersonalBelongings should replace the personal belongings list with the new list", victim.getPersonalBelongings().containsAll(personalBelongings));
+    }
+    
+    @Test
+    public void testAddAndRemovePersonalBelonging() {
+        Supply newSupply = new Supply("Emergency Kit", 1);
+        victim.addPersonalBelonging(newSupply);
+        assertTrue("addPersonalBelonging should add the supply to personal belongings", victim.getPersonalBelongings().contains(newSupply));
+        victim.removePersonalBelonging(newSupply);
+        assertFalse("removePersonalBelonging should remove the supply from personal belongings", victim.getPersonalBelongings().contains(newSupply));
+    }
+    
+    @Test
+        public void testSetAndGetApproximateAge() {
+            int newApproximateAge = 37;
+            victim.setApproximateAge(newApproximateAge);
+            assertEquals("setApproximateAge should correctly update the approximate age", newApproximateAge, victim.getApproximateAge());
+        }
+    
+        @Test
+        public void testSetAndGetGenderIdentity() {
+            String newGenderIdentity = "non-binary";
+            victim.setGenderIdentity(newGenderIdentity);
+            assertEquals("setGenderIdentity should correctly update the gender identity", newGenderIdentity, victim.getGenderIdentity());
+        }
+    
+        @Test
+        public void testSetAndGetDietaryRestrictions() {
+            List<MealType> newDietaryRestrictions = Arrays.asList(MealType.VEGAN, MealType.GLUTEN_FREE);
+            victim.setDietaryRestrictions(newDietaryRestrictions);
+            assertTrue("setDietaryRestrictions should correctly update the dietary restrictions", victim.getDietaryRestrictions().containsAll(newDietaryRestrictions));
+        }
 }
 
 

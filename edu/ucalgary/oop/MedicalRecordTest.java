@@ -28,7 +28,7 @@ public class MedicalRecordTest {
     assertEquals("getLocation should return the correct Location", expectedLocation, medicalRecord.getLocation());
     }
 
- @Test
+    @Test
     public void testSetLocation() {
 	Location newExpectedLocation = new Location("Shelter B", "150 8 Ave NW ");
 	medicalRecord.setLocation(newExpectedLocation);
@@ -39,10 +39,10 @@ public class MedicalRecordTest {
     public void testGetTreatmentDetails() {
         assertEquals("getTreatmentDetails should return the correct treatment details", expectedTreatmentDetails, medicalRecord.getTreatmentDetails());
     }
-@Test
+    @Test
     public void testSetTreatmentDetails() {
-	String newExpectedTreatment = "No surgery required";
-	medicalRecord.setTreatmentDetails(newExpectedTreatment);
+    String newExpectedTreatment = "No surgery required";
+    medicalRecord.setTreatmentDetails(newExpectedTreatment);
     assertEquals("setTreatmentDetails should update the treatment details", newExpectedTreatment, medicalRecord.getTreatmentDetails());
     }
 
@@ -52,54 +52,27 @@ public class MedicalRecordTest {
     assertEquals("getDateOfTreatment should return the correct date of treatment", expectedDateOfTreatment, medicalRecord.getDateOfTreatment());
     }
 	
-	@Test
+    @Test
     public void testSetDateOfTreatment() {
-	String newExpectedDateOfTreatment = "2024-02-05";
-	medicalRecord.setDateOfTreatment(newExpectedDateOfTreatment);
-    assertEquals("setDateOfTreatment should update date of treatment", newExpectedDateOfTreatment, medicalRecord.getDateOfTreatment());
+        String newExpectedDateOfTreatment = "2024-02-05";
+        medicalRecord.setDateOfTreatment(newExpectedDateOfTreatment);
+        assertEquals("setDateOfTreatment should update date of treatment", newExpectedDateOfTreatment, medicalRecord.getDateOfTreatment());
     }
+    
 	@Test
     public void testSetDateOfTreatmentWithValidFormat() {
         
         medicalRecord.setDateOfTreatment(validDateOfTreatment); // Should not throw an exception
     }
 
-    @Test
-    public void testSetDateOfBirthWithInvalidFormat() {
-        boolean correctValue = false;
-        String failureReason = "no exception was thrown";
-
-        try {
-           medicalRecord.setDateOfTreatment(inValidDateOfTreatment); // Should throw IllegalArgumentException
-        }
-        catch (IllegalArgumentException e) {
-           correctValue = true;
-        }
-        catch (Exception e) {
-           failureReason = "the wrong type of exception was thrown";
-        }
-
-        String message = "setDateOfTreatment() should throw an IllegalArgumentException with invalid date format '" + inValidDateOfTreatment + "' but " + failureReason + ".";
-        assertTrue(message, correctValue);
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetDateOfTreatmentWithInvalidFormat() {
+        medicalRecord.setDateOfTreatment(inValidDateOfTreatment); // Should throw IllegalArgumentException
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testSetDateOfBirthWithNotADate() {
-        boolean correctValue = false;
-        String failureReason = "no exception was thrown";
-
-        try {
-           medicalRecord.setDateOfTreatment(expectedTreatmentDetails); // Should throw IllegalArgumentException
-        }
-        catch (IllegalArgumentException e) {
-           correctValue = true;
-        }
-        catch (Exception e) {
-           failureReason = "the wrong type of exception was thrown";
-        }
-
-        String message = "setDateOfTreatment() should throw an IllegalArgumentException with invalid non-date input '" + inValidDateOfTreatment + "' but " + failureReason + ".";
-        assertTrue(message, correctValue);
+        medicalRecord.setDateOfTreatment(expectedTreatmentDetails); // Should throw IllegalArgumentException
     }
 }
 

@@ -11,8 +11,7 @@ import static org.junit.Assert.*;
 
 public class FamilyRelationTest {
 
-    private DisasterVictim personOne = new DisasterVictim("John Dalan", "2024-01-19");
-    private DisasterVictim personTwo = new DisasterVictim("Jane Dalan", "2024-02-20");
+    private LinkedList<DisasterVictim> relatedPersons = new LinkedList<>();
     private String relationshipTo = "sibling";
     private FamilyRelation testFamilyRelationObject = new FamilyRelation(personOne, relationshipTo, personTwo);
     
@@ -22,18 +21,12 @@ public class FamilyRelationTest {
     }
 	
     @Test
-    public void testSetAndGetPersonOne() {
-        DisasterVictim newPersonOne = new DisasterVictim("New Person", "2024-03-21");
-        testFamilyRelationObject.setPersonOne(newPersonOne);
-        assertEquals("setPersonOne should update personOne", newPersonOne, testFamilyRelationObject.getPersonOne());
-    }
-
-    @Test
-    public void testSetAndGetPersonTwo() {
-        DisasterVictim newPersonTwo = new DisasterVictim("Another Person", "2024-04-22");
-        testFamilyRelationObject.setPersonTwo(newPersonTwo);
-        assertEquals("setPersonTwo should update personTwo", newPersonTwo, testFamilyRelationObject.getPersonTwo());
-    }
+    public void testSetAndGetRelatedPersons() {
+            LinkedList<DisasterVictim> newRelatedPersons = new LinkedList<>();
+            newRelatedPersons.add(new DisasterVictim("New Person", "2024-03-21"));
+            testFamilyRelationObject.setRelatedPersons(newRelatedPersons);
+            assertEquals("setRelatedPersons should update relatedPersons", newRelatedPersons, testFamilyRelationObject.getRelatedPersons());
+        }
 
     @Test
     public void testSetAndGetRelationshipTo() {

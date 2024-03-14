@@ -35,12 +35,26 @@ public class LocationTest {
         assertEquals("Constructor should set the name correctly", "Shelter A", location.getName());
         assertEquals("Constructor should set the address correctly", "1234 Shelter Ave", location.getAddress());
     }
+    
+    @Test
+    public void testGetName() {
+        String expectedName = "University of Calgary";
+        Location location = new Location(expectedName, "2500 University Dr NW");
+        assertEquals("getName should return the correct name", expectedName, location.getName());
+    }
 
     @Test
     public void testSetName() {
         String newName = "Shelter B";
         location.setName(newName);
         assertEquals("setName should update the name of the location", newName, location.getName());
+    }
+    
+    @Test
+    public void testGetAddress() {
+        String expectedAddress = "2500 University Dr NW";
+        Location location = new Location("University of Calgary", expectedAddress);
+        assertEquals("getAddress should return the correct address", expectedAddress, location.getAddress());
     }
 
     @Test

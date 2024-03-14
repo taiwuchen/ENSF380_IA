@@ -139,22 +139,6 @@ public class DisasterVictimTest {
     }
 
     @Test
-    public void testAddPersonalBelonging() {
-        Supply newSupply = new Supply("Emergency Kit", 1);
-        victim.addPersonalBelonging(newSupply);
-        Supply[] testSupplies = victim.getPersonalBelongings();
-        boolean correct = false;
- 
-        int i;
-        for (i = 0; i < testSupplies.length; i++) {
-            if (testSupplies[i] == newSupply) {
-                correct = true;
-            }
-        }
-        assertTrue("addPersonalBelonging should add the supply to personal belongings", correct);
-    }
-
-    @Test
     public void testRemoveFamilyConnection() {
         DisasterVictim victim1 = new DisasterVictim("Jane", "2024-01-20");
         DisasterVictim victim2 = new DisasterVictim("John", "2024-01-22");
@@ -180,6 +164,22 @@ public class DisasterVictimTest {
         }
     assertTrue("removeFamilyConnection should remove the family member", true);
 }  
+
+    @Test
+    public void testAddPersonalBelonging() {
+        Supply newSupply = new Supply("Emergency Kit", 1);
+        victim.addPersonalBelonging(newSupply);
+        Supply[] testSupplies = victim.getPersonalBelongings();
+        boolean correct = false;
+        
+        int i;
+        for (i = 0; i < testSupplies.length; i++) {
+            if (testSupplies[i] == newSupply) {
+                correct = true;
+            }
+        }
+        assertTrue("addPersonalBelonging should add the supply to personal belongings", correct);
+    }
 
     @Test
     public void testRemovePersonalBelonging() {
@@ -225,6 +225,16 @@ public class DisasterVictimTest {
        }
        assertTrue("Family relation should be set", correct);
     }
+    
+    @Test
+    public void testGetFamilyConnections() {
+        LinkedList<FamilyRelation> expectedFamilyConnections = new LinkedList<>();
+        FamilyRelation relation1 = new FamilyRelation(new DisasterVictim("Jane", "2024-01-20"), "sibling", new DisasterVictim("John", "2024-01-22"));
+        expectedFamilyConnections.add(relation1);
+        victim.setFamilyConnections(expectedFamilyConnections);
+        assertEquals("getFamilyConnections should return the correct family connections list", expectedFamilyConnections, victim.getFamilyConnections());
+    }
+    
 
     @Test
     public void testSetAndGetMedicalRecords() {
